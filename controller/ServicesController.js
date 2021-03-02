@@ -12,9 +12,9 @@ class ServicesController {
 
   divisa(req, res) {
     var data = req.body;
-    var a = data.original;
-    var b = data.cantidad;
-    var c = data.tipoCambio;
+    var monedaOriginal = data.original;
+    var cant = data.cantidad;
+    var monedaCambio = data.tipoCambio;
 
     var divs = [
       "CAD",
@@ -90,11 +90,23 @@ class ServicesController {
       6.96,
     ];
     var result =
-      (b / values[divs.findIndex((div) => div === a)]) *
-      values[divs.findIndex((div) => div === c)];
+      (cant / values[divs.findIndex((div) => div === monedaOriginal)]) *
+      values[divs.findIndex((div) => div === monedaCambio)];
     data["Convertido"] = result;
-    console.log(data);
     res.status(200).json(data);
+  }
+
+  interes(req, res) {
+    var data = req.body;
+    var montoSol = data.montoSolicitado;
+    var interesAnu = data.interesAnual;
+    var interesCalc = interesAnu / 100 + 1;
+    var tiempoPa = req.tiempoPago;
+    var result = montoSol * Math.pow(interesCalc, tiempoPa).toFixed(2);
+
+    data["CantidadParaPagar"] = result;
+    res.status(200).json(data);
+    console.log(result);
   }
 }
 export default ServicesController;
