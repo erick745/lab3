@@ -8,5 +8,6 @@ var services = new ServicesController();
 router.get("/", services.index);
 router.post("/test", services.test);
 router.get("/test", services.test);
+router.post("/divisa", services.divisa);
 
 export default router;
